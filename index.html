@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Lưu Huyền Anh!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <audio id="bg-music" loop preload="auto">
+    <source src="nhac.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="screen active" id="start-screen">
+    <div class="stars-bg"></div>
+    <div class="start-content">
+      <h2>🎁 You Have 1 Special Message</h2>
+      <button class="pulse-btn" onclick="startExperience()">Click to Open ❤️</button>
+    </div>
+  </div>
+
+  <div class="screen" id="matrix-screen">
+    <canvas id="matrix-canvas"></canvas>
+  </div>
+
+  <div class="screen" id="letter-screen">
+    <div class="stars-bg"></div>
+    <div class="envelope-box" onclick="goToAlbum()">
+      <span class="envelope-icon">💌</span>
+      <h3>Happy Birthday!</h3>
+      <p>Chạm để mở cuốn album kỷ niệm ✨</p>
+    </div>
+  </div>
+
+  <div class="screen" id="album-screen">
+    <div class="stars-bg"></div>
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="img-container"><img src="anh1.jpeg" alt="anh1"></div>
+          <div class="card-msg">Chúc mừng sinh nhật tuổi 18 lần thứ 5 của Bon 💕</div>
+        </div>
+        <div class="swiper-slide">
+          <div class="img-container"><img src="anh2.jpeg" alt="anh2"></div>
+          <div class="card-msg">Mãi luôn xinh đẹp và rạng rỡ như thế này nhé ✨</div>
+        </div>
+        <div class="swiper-slide">
+          <div class="img-container"><img src="anh3.jpeg" alt="anh3"></div>
+          <div class="card-msg">Luôn hạnh phúc và vui vẻ bên anh 💖</div>
+        </div>
+        <div class="swiper-slide">
+          <div class="img-container"><img src="anh4.jpeg" alt="anh4"></div>
+          <div class="card-msg">Cảm ơn em vì tất cả những khoảnh khắc ngọt ngào 🌸</div>
+        </div>
+        <div class="swiper-slide center-slide">
+          <h2>Forever With Bon ❤️</h2>
+          <p>Món quà cuối cùng dành cho em...</p>
+          <button class="action-btn" onclick="goToHeart()">Xem điều bất ngờ ✨</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="heart-screen">
+    <div class="stars-bg"></div>
+    
+    <div class="heart-center-text-long" id="heart-title">
+      Chúc em tuổi mới có nhiều tình cảm của anh, may mắn, siêu nhiều tiền, nhiều điều hạnh phúc mỗi ngày, Đại gia đình các bé mèo xin chúc chị, mẹ của chúng nó một năm thành công meooo meooo.<br><br>
+      <span class="highlight-name">Love You Always Lưu Huyền Anh ❤️</span><br><br>
+      Mong em có thể cùng anh đồng hành trên mọi con đường sắp tới.
+    </div>
+    
+    <div id="heart-stage"></div>
+
+    <div id="photo-modal" onclick="closeModal()">
+      <div class="modal-content-wrapper" onclick="event.stopPropagation()">
+        <img id="modal-img" src="" alt="Zoomed Photo">
+        <span class="close-modal-btn" onclick="closeModal()">×</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
