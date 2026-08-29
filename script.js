@@ -1,5 +1,4 @@
 /* ================= CẤU HÌNH ================= */
-// Do bạn đã xác nhận TẤT CẢ ảnh đều là 100% .jpeg, code tạo link trực tiếp siêu nhẹ
 const heartPhotos = Array.from({ length: 21 }, (_, i) => `anh${i + 1}.jpeg`);
 
 // Chuyển màn hình mượt mà
@@ -70,7 +69,7 @@ function startMatrixCountdown() {
     ctx.fillStyle = "#ff1493";
     ctx.shadowColor = "#ff69b4";
     ctx.shadowBlur = 20;
-    ctx.font = "bold 55px 'Poppins', sans-serif";
+    ctx.font = "bold 55px 'Quicksand', sans-serif"; /* Đã cập nhật Font tiếng Việt */
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(currentText, canvas.width / 2, canvas.height / 2);
@@ -108,7 +107,6 @@ function goToHeart() {
     const img = document.createElement('img');
     img.className = 'heart-img';
     
-    // Nạp link trực tiếp (100% JPEG) -> Chạy tốc độ cao và ổn định tuyệt đối
     img.src = heartPhotos[i];
 
     // Tọa độ quỹ đạo hình trái tim
