@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday Lưu Huyền Anh!</title>
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,6 +19,7 @@
     <source src="nhac.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- MÀN 1: MỞ ĐẦU -->
   <div class="screen active" id="start-screen">
     <div class="stars-bg"></div>
     <div class="start-content">
@@ -24,10 +28,12 @@
     </div>
   </div>
 
+  <!-- MÀN 2: MATRIX CODE RAIN -->
   <div class="screen" id="matrix-screen">
     <canvas id="matrix-canvas"></canvas>
   </div>
 
+  <!-- MÀN 3: PHONG BÌ -->
   <div class="screen" id="letter-screen">
     <div class="stars-bg"></div>
     <div class="envelope-box" onclick="goToAlbum()">
@@ -37,6 +43,7 @@
     </div>
   </div>
 
+  <!-- MÀN 4: ALBUM LẬT ẢNH -->
   <div class="screen" id="album-screen">
     <div class="stars-bg"></div>
     <div class="swiper">
@@ -66,6 +73,7 @@
     </div>
   </div>
 
+  <!-- MÀN 5: TRÁI TIM SIÊU KHỔNG LỒ -->
   <div class="screen" id="heart-screen">
     <div class="stars-bg"></div>
     
@@ -77,15 +85,69 @@
     
     <div id="heart-stage"></div>
 
+    <!-- HỘP POPUP PHÓNG TO ẢNH -->
     <div id="photo-modal" onclick="closeModal()">
       <div class="modal-content-wrapper" onclick="event.stopPropagation()">
         <img id="modal-img" src="" alt="Zoomed Photo">
         <span class="close-modal-btn" onclick="closeModal()">×</span>
       </div>
     </div>
+
+    <!-- THÔNG BÁO TIN NHẮN ẨN (Hiện sau 30s) -->
+    <div id="new-email-toast">
+      <span>💌 Bạn có 1 tin nhắn siêu đặc biệt!</span>
+      <button class="open-email-btn" onclick="openEmailIntro()">Mở ngay</button>
+    </div>
   </div>
 
+  <!-- MÀN 6: EMAIL INTRO -->
+  <div class="screen" id="email-intro-screen" style="background: #fdfbf7;">
+    <h2 class="email-title">hey babe!</h2>
+    <div class="cute-envelope" onclick="openEmailDetail()">
+      <div class="flap"></div>
+      <div class="heart-seal">❤️</div>
+    </div>
+    <p class="email-subtitle">you've got new emails</p>
+  </div>
+
+  <!-- MÀN 7: EMAIL DETAIL -->
+  <div class="screen" id="email-detail-screen" style="background: #fdfbf7;">
+    <div class="email-red-card">
+      <p><strong>From:</strong> Anh</p>
+      <p><strong>To:</strong> Lưu Huyền Anh</p>
+      <p><strong>Message:</strong><br><br>Check out this awesome surprise for YOU!</p>
+      <a href="#" class="see-attachment" onclick="openLongLetter(); return false;">see attachment</a>
+    </div>
+  </div>
+
+  <!-- MÀN 8: LONG LETTER (TÂM THƯ DÀI) -->
+  <div class="screen scrollable-screen" id="long-letter-screen">
+    <div class="letter-content-wrapper">
+      <div class="cutout-photo">
+        <img src="anh1.jpeg" alt="Bon">
+        <div class="party-hat">🎉</div>
+      </div>
+      
+      <h3 class="letter-heading">Happy Birthday, my love ❤️</h3>
+      
+      <p class="letter-body">
+        Chúc em tuổi mới có nhiều tình cảm của anh, may mắn, siêu nhiều tiền, nhiều điều hạnh phúc mỗi ngày, Đại gia đình các bé mèo xin chúc chị, mẹ của chúng nó một năm thành công meooo meooo.
+        <br><br>
+        Being with you is truly one of the best things that has ever happened to me. From the moment you came into my life, everything started to feel brighter and more meaningful.
+        <br><br>
+        Thank you for loving me the way you do, for supporting me even when things are difficult, and for always reminding me that I'm not alone.
+        <br><br>
+        Cảm ơn em vì đã là người bạn đồng hành tuyệt vời nhất. Love you more than words can ever explain!
+        <br><br>
+        <strong>Love You Always, Lưu Huyền Anh.</strong><br>
+        Mong em có thể cùng anh đồng hành trên mọi con đường sắp tới.
+      </p>
+    </div>
+  </div>
+
+  <!-- Thư viện Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- Custom JS -->
   <script src="script.js"></script>
 </body>
 </html>
