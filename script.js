@@ -6,7 +6,7 @@ function switchScreen(fromId, toId) {
   if (fromScreen) fromScreen.classList.remove('active');
   setTimeout(() => {
     if (toScreen) toScreen.classList.add('active');
-    // Nếu chuyển sang màn scroll, reset vị trí thanh cuộn
+    // Màn hình tâm thư cần cuộn từ trên xuống dưới
     if(toId === 'long-letter-screen') {
         toScreen.scrollTop = 0;
     }
@@ -24,7 +24,7 @@ function startExperience() {
   startMatrixCountdown();
 }
 
-// Đếm ngược Matrix Rain
+// Đếm ngược Matrix
 function startMatrixCountdown() {
   const canvas = document.getElementById('matrix-canvas');
   const ctx = canvas.getContext('2d');
@@ -92,7 +92,7 @@ function goToAlbum() {
   }
 }
 
-// Màn Trái Tim & Kích hoạt đếm ngược 30 giây hiển thị Email
+// Màn Trái Tim & Kích hoạt đếm ngược 8 giây (để test thử)
 function goToHeart() {
   switchScreen('album-screen', 'heart-screen');
   const stage = document.getElementById('heart-stage');
@@ -130,11 +130,15 @@ function goToHeart() {
     }, 150 + i * 65);
   }
 
-  // ============== ĐẾM NGƯỢC 30 GIÂY HIỂN THỊ THÔNG BÁO MẬT THƯ ==============
+  // ============== ĐẾM NGƯỢC HIỂN THỊ THÔNG BÁO MẬT THƯ ==============
+  // Đang để 8 giây (8000ms) để test, nếu chạy tốt bạn đổi lại thành 30000ms
   setTimeout(() => {
     const toast = document.getElementById('new-email-toast');
-    if (toast) toast.classList.add('show');
-  }, 30000); // 30,000 milliseconds = 30 seconds
+    if (toast) {
+      toast.classList.add('show');
+      console.log("Đã hiện nút thông báo!");
+    }
+  }, 8000); 
 }
 
 // Modal Ảnh
