@@ -1,46 +1,87 @@
-/* ================= TOAST THÔNG BÁO TIN NHẮN MỚI SAU 30S (BẢN FIX LỖI) ================= */
-#new-email-toast {
-  position: fixed; /* Sửa thành fixed để luôn nổi trên cùng mọi màn hình */
-  top: -100px; 
-  left: 50%; 
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.95); 
-  backdrop-filter: blur(10px);
-  color: #333; 
-  padding: 12px 25px; 
-  border-radius: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(255, 105, 180, 0.6); 
-  z-index: 999999; /* Đẩy z-index lên cao nhất */
-  display: flex; 
-  align-items: center; 
-  gap: 15px; 
-  font-weight: 700;
-  transition: top 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  animation: glow-toast 2s infinite alternate; /* Hiệu ứng phát sáng để dễ chú ý */
-}
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+body, html { width: 100%; height: 100%; overflow: hidden; background-color: #05050a; font-family: 'Quicksand', sans-serif; color: #fff; }
 
-@keyframes glow-toast {
-  0% { box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(255, 105, 180, 0.5); }
-  100% { box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 35px rgba(255, 20, 147, 0.9); }
-}
+.screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease, visibility 0.8s ease; opacity: 0; visibility: hidden; z-index: 1; }
+.screen.active { opacity: 1; visibility: visible; z-index: 10; }
 
-#new-email-toast.show { 
-  top: 40px; /* Trượt xuống vị trí 40px từ cạnh trên */
-}
+/* MÀN 1 */
+#start-screen { background: radial-gradient(circle, #1a0a1a 0%, #05050a 100%); cursor: pointer; text-align: center; }
+.start-content { z-index: 2; text-align: center; }
+.start-content h2 { margin-bottom: 25px; font-size: 1.8rem; }
+.pulse-btn { padding: 16px 36px; font-size: 1.1rem; background: linear-gradient(45deg, #ff416c, #ff4b2b); border: none; border-radius: 50px; color: white; font-weight: 700; cursor: pointer; box-shadow: 0 0 25px rgba(255, 65, 108, 0.6); animation: pulse 1.8s infinite; }
+@keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 65, 108, 0.6); } 50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255, 65, 108, 0.9); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 65, 108, 0.6); } }
 
-.open-email-btn { 
-  background: linear-gradient(45deg, #ff2d55, #ff69b4); 
-  color: #fff; 
-  border: none; 
-  padding: 8px 18px; 
-  border-radius: 20px; 
-  cursor: pointer; 
-  font-family: 'Quicksand', sans-serif; 
-  font-weight: bold; 
-  box-shadow: 0 4px 10px rgba(255, 45, 85, 0.4);
-  transition: transform 0.2s;
-}
+/* MÀN 2 */
+#matrix-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.stars-bg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; background-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, #ffb6c1, rgba(0,0,0,0)), radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, #ff69b4, rgba(0,0,0,0)); background-repeat: repeat; background-size: 200px 200px; opacity: 0.6; animation: twinkle 4s infinite alternate ease-in-out; }
+@keyframes twinkle { 0% { opacity: 0.3; transform: scale(0.98); } 100% { opacity: 0.8; transform: scale(1.02); } }
 
-.open-email-btn:hover {
-  transform: scale(1.1);
+/* MÀN 3 */
+.envelope-box { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); padding: 30px 40px; border-radius: 20px; border: 1px solid rgba(255, 105, 180, 0.3); text-align: center; cursor: pointer; box-shadow: 0 10px 40px rgba(255, 105, 180, 0.2); transition: transform 0.3s; }
+.envelope-box:hover { transform: translateY(-5px) scale(1.03); }
+.envelope-box h3 { font-size: 1.8rem; color: #ff69b4; margin-bottom: 6px; font-family: 'Dancing Script', cursive; }
+.envelope-box p { color: #ccc; font-size: 1rem; }
+.envelope-icon { font-size: 5rem; display: block; margin-bottom: 15px; animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+/* MÀN 4 */
+.swiper { width: 90%; max-width: 420px; height: 480px; }
+.swiper-slide { background: rgba(255, 255, 255, 0.95); border-radius: 18px; display: flex; flex-direction: column; align-items: center; padding: 16px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); color: #333; }
+.swiper-slide .img-container { width: 100%; height: 75%; border-radius: 12px; overflow: hidden; position: relative; }
+.swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+.swiper-slide .card-msg { margin-top: 15px; font-family: 'Dancing Script', cursive; font-size: 1.8rem; font-weight: 700; text-align: center; color: #ff2d55; line-height: 1.3; }
+.center-slide { justify-content: center; text-align: center; }
+.center-slide h2 { color: #ff2d55; font-family: 'Dancing Script', cursive; font-size: 3rem; margin-bottom: 10px; }
+.center-slide p { font-size: 1rem; color: #666; margin-bottom: 20px; }
+.action-btn { margin-top: 10px; padding: 10px 24px; background: #ff2d55; color: white; border: none; border-radius: 20px; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
+
+/* MÀN 5 */
+#heart-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
+#heart-stage { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: visible; z-index: 5; pointer-events: none; }
+.heart-center-text-long { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 92%; max-width: 750px; background: rgba(15, 0, 20, 0.5); backdrop-filter: blur(10px); padding: 30px; border-radius: 20px; border: 1px solid rgba(255, 105, 180, 0.3); text-align: center; font-size: 1.25rem; font-weight: 600; line-height: 1.8; color: #fff; z-index: 2; pointer-events: none; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 105, 180, 0.15); animation: float-text 4s infinite alternate ease-in-out; }
+@keyframes float-text { 0% { transform: translate(-50%, -50%) translateY(0); } 100% { transform: translate(-50%, -50%) translateY(-8px); } }
+.highlight-name { font-family: 'Dancing Script', cursive; font-size: 3rem; color: #ff69b4; font-weight: bold; text-shadow: 0 0 25px rgba(255, 105, 180, 1); display: inline-block; margin-top: 5px; }
+.heart-img { position: absolute; width: 120px; height: 120px; border-radius: 18px; border: 3px solid #ff69b4; box-shadow: 0 0 20px rgba(255, 105, 180, 0.85); object-fit: cover; top: 50%; left: 50%; z-index: 10; display: block; opacity: 0; cursor: pointer; pointer-events: auto; transform: translate(-50%, -50%) scale(0.1); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease, opacity 1.2s ease; }
+.heart-img:hover { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.4) !important; z-index: 999 !important; border: 4px solid #fff !important; box-shadow: 0 0 40px #ff1493, 0 15px 40px rgba(0, 0, 0, 0.9) !important; }
+
+/* MODAL ẢNH */
+#photo-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 99999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+#photo-modal.open { opacity: 1; visibility: visible; }
+.modal-content-wrapper { position: relative; max-width: 90vw; max-height: 80vh; transform: scale(0.6); transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+#photo-modal.open .modal-content-wrapper { transform: scale(1); }
+#modal-img { max-width: 85vw; max-height: 75vh; border-radius: 20px; border: 3px solid #ff69b4; box-shadow: 0 0 40px rgba(255, 105, 180, 0.9); object-fit: contain; }
+.close-modal-btn { position: absolute; top: -18px; right: -18px; width: 45px; height: 45px; background: #ff1493; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; cursor: pointer; z-index: 10; }
+
+/* TOAST THÔNG BÁO GHIM TRÊN CÙNG */
+#new-email-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); color: #333; padding: 12px 25px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(255, 105, 180, 0.6); z-index: 999999; display: flex; align-items: center; gap: 15px; font-weight: 700; transition: top 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); animation: glow-toast 2s infinite alternate; }
+@keyframes glow-toast { 0% { box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(255, 105, 180, 0.5); } 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 35px rgba(255, 20, 147, 0.9); } }
+#new-email-toast.show { top: 40px; }
+.open-email-btn { background: linear-gradient(45deg, #ff2d55, #ff69b4); color: #fff; border: none; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: transform 0.2s; }
+.open-email-btn:hover { transform: scale(1.1); }
+
+/* CÁC MÀN HÌNH TÂM THƯ */
+.email-title { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: #333; margin-bottom: 20px; }
+.email-subtitle { font-size: 1.2rem; color: #666; margin-top: 20px; letter-spacing: 1px; }
+.cute-envelope { width: 150px; height: 100px; background: #f38ba0; border-radius: 10px; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(243, 139, 160, 0.4); transition: transform 0.3s; }
+.cute-envelope:hover { transform: scale(1.05) translateY(-5px); }
+.cute-envelope .flap { position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 75px solid transparent; border-right: 75px solid transparent; border-top: 50px solid #ffb6c1; border-radius: 10px 10px 0 0; }
+.heart-seal { position: absolute; z-index: 2; font-size: 1.5rem; top: 35px; }
+
+.email-red-card { background: #e53935; color: #fff; width: 90%; max-width: 400px; border-radius: 12px; padding: 30px; box-shadow: 0 15px 30px rgba(229, 57, 53, 0.3); font-size: 1.1rem; line-height: 1.6; text-align: left; }
+.email-red-card p { margin-bottom: 12px; }
+.see-attachment { display: inline-block; margin-top: 20px; color: #ffcccb; text-decoration: underline; cursor: pointer; font-style: italic; font-weight: bold; }
+
+.scrollable-screen { display: block; overflow-y: auto; background: #c62828 !important; padding: 40px 20px; color: #fff; }
+.letter-content-wrapper { max-width: 600px; margin: 0 auto; text-align: center; }
+.cutout-photo { position: relative; display: inline-block; margin-bottom: 20px; }
+.cutout-photo img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3); object-fit: cover; }
+.party-hat { position: absolute; top: -25px; left: 10px; font-size: 2.5rem; transform: rotate(-15deg); }
+.letter-heading { font-family: 'Dancing Script', cursive; font-size: 3rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+.letter-body { font-size: 1.1rem; line-height: 1.8; text-align: justify; text-align-last: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); padding-bottom: 50px; }
+
+@media (max-width: 600px) {
+  .heart-img { width: 80px; height: 80px; }
+  .heart-center-text-long { font-size: 0.9rem; }
+  .highlight-name { font-size: 2rem; }
+  .letter-body { font-size: 0.95rem; }
 }
