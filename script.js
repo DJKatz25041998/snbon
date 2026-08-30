@@ -93,7 +93,11 @@ function goToHeart() {
 
   const total = 21;
   const isMobile = window.innerWidth < 600;
-  const scaleR = isMobile ? 18 : 42; 
+  
+  // TOÁN HỌC QUỸ ĐẠO BÁN KÍNH TRÁI TIM
+  // Scale 9 giúp trục X (chiều ngang) rộng tối đa 340px -> Vừa khít tuyệt đối 100% dòng điện thoại dọc
+  // Máy tính (PC) vẫn giữ nguyên độ hoành tráng rộng rãi (Scale 38)
+  const scaleR = isMobile ? 9 : 38; 
 
   for (let i = 0; i < total; i++) {
     const img = document.createElement('img');
@@ -123,8 +127,7 @@ function goToHeart() {
     }, 150 + i * 65);
   }
 
-  // ĐANG TEST HIỂN THỊ THÔNG BÁO SAU 10 GIÂY
-  // Khi bạn gửi cho bạn gái có thể đổi 10000 thành 30000
+  // Đếm ngược 10s hiện mật thư
   setTimeout(() => {
     const toast = document.getElementById('new-email-toast');
     if (toast) {
