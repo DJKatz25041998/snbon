@@ -1,29 +1,30 @@
-/* ================= CẤU HÌNH ================= */
 const heartPhotos = Array.from({ length: 21 }, (_, i) => `anh${i + 1}.jpeg`);
 
-// Chuyển màn hình mượt mà
 function switchScreen(fromId, toId) {
   const fromScreen = document.getElementById(fromId);
   const toScreen = document.getElementById(toId);
   if (fromScreen) fromScreen.classList.remove('active');
   setTimeout(() => {
     if (toScreen) toScreen.classList.add('active');
+    // Nếu chuyển sang màn scroll, reset vị trí thanh cuộn
+    if(toId === 'long-letter-screen') {
+        toScreen.scrollTop = 0;
+    }
   }, 300);
 }
 
-// Màn 1 -> Màn 2: Bật nhạc & Bắt đầu
+// Bắt đầu
 function startExperience() {
   const music = document.getElementById('bg-music');
   if (music) {
     music.currentTime = 0;
     music.play().catch(e => console.warn("Trình duyệt chặn phát âm thanh:", e));
   }
-
   switchScreen('start-screen', 'matrix-screen');
   startMatrixCountdown();
 }
 
-// Màn 2: Matrix Rain
+// Đếm ngược Matrix Rain
 function startMatrixCountdown() {
   const canvas = document.getElementById('matrix-canvas');
   const ctx = canvas.getContext('2d');
@@ -69,7 +70,7 @@ function startMatrixCountdown() {
     ctx.fillStyle = "#ff1493";
     ctx.shadowColor = "#ff69b4";
     ctx.shadowBlur = 20;
-    ctx.font = "bold 55px 'Quicksand', sans-serif"; /* Đã cập nhật Font tiếng Việt */
+    ctx.font = "bold 55px 'Quicksand', sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(currentText, canvas.width / 2, canvas.height / 2);
@@ -78,7 +79,7 @@ function startMatrixCountdown() {
   const renderTimer = setInterval(draw, 33);
 }
 
-// Màn 3 -> Màn 4: Mở album ảnh 3D
+// Album 3D
 let swiperInstance = null;
 function goToAlbum() {
   switchScreen('letter-screen', 'album-screen');
@@ -91,25 +92,21 @@ function goToAlbum() {
   }
 }
 
-// Màn 4 -> Màn 5: XẾP 21 ẢNH THÀNH TRÁI TIM SIÊU KHỔNG LỒ
+// Màn Trái Tim & Kích hoạt đếm ngược 30 giây hiển thị Email
 function goToHeart() {
   switchScreen('album-screen', 'heart-screen');
   const stage = document.getElementById('heart-stage');
   stage.innerHTML = '';
 
   const total = 21;
-  
-  // BÁN KÍNH TRÁI TIM LỚN GẤP RƯỠI ĐỂ KHÔNG CHẠM VÀO CHỮ BÊN TRONG
   const isMobile = window.innerWidth < 600;
   const scaleR = isMobile ? 18 : 42; 
 
   for (let i = 0; i < total; i++) {
     const img = document.createElement('img');
     img.className = 'heart-img';
-    
     img.src = heartPhotos[i];
 
-    // Tọa độ quỹ đạo hình trái tim
     const t = (Math.PI * 2 * i) / total;
     const x = 16 * Math.pow(Math.sin(t), 3);
     const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
@@ -120,7 +117,6 @@ function goToHeart() {
     img.style.setProperty('--tx', posX);
     img.style.setProperty('--ty', posY);
 
-    // CLICK ĐỂ BẬT MODAL PHÓNG TO ẢNH
     img.onclick = function(e) {
       e.stopPropagation();
       openModal(this.src); 
@@ -128,15 +124,20 @@ function goToHeart() {
 
     stage.appendChild(img);
 
-    // Hiệu ứng bung ảnh ra
     setTimeout(() => {
       img.style.opacity = '1';
       img.style.transform = `translate(calc(-50% + ${posX}), calc(-50% + ${posY})) scale(1)`;
     }, 150 + i * 65);
   }
+
+  // ============== ĐẾM NGƯỢC 30 GIÂY HIỂN THỊ THÔNG BÁO MẬT THƯ ==============
+  setTimeout(() => {
+    const toast = document.getElementById('new-email-toast');
+    if (toast) toast.classList.add('show');
+  }, 30000); // 30,000 milliseconds = 30 seconds
 }
 
-/* ================= MODAL PHÓNG TO ẢNH ================= */
+// Modal Ảnh
 function openModal(imageSrc) {
   const modal = document.getElementById('photo-modal');
   const modalImg = document.getElementById('modal-img');
@@ -151,4 +152,19 @@ function closeModal() {
   if (modal) {
     modal.classList.remove('open');
   }
+}
+
+/* ================= CHUỖI SỰ KIỆN MỞ MẬT THƯ (EMAIL) ================= */
+function openEmailIntro() {
+  // Ẩn thông báo toast
+  document.getElementById('new-email-toast').classList.remove('show');
+  switchScreen('heart-screen', 'email-intro-screen');
+}
+
+function openEmailDetail() {
+  switchScreen('email-intro-screen', 'email-detail-screen');
+}
+
+function openLongLetter() {
+  switchScreen('email-detail-screen', 'long-letter-screen');
 }
