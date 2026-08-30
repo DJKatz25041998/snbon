@@ -6,14 +6,12 @@ function switchScreen(fromId, toId) {
   if (fromScreen) fromScreen.classList.remove('active');
   setTimeout(() => {
     if (toScreen) toScreen.classList.add('active');
-    // Màn hình tâm thư cần cuộn từ trên xuống dưới
     if(toId === 'long-letter-screen') {
         toScreen.scrollTop = 0;
     }
   }, 300);
 }
 
-// Bắt đầu
 function startExperience() {
   const music = document.getElementById('bg-music');
   if (music) {
@@ -24,7 +22,6 @@ function startExperience() {
   startMatrixCountdown();
 }
 
-// Đếm ngược Matrix
 function startMatrixCountdown() {
   const canvas = document.getElementById('matrix-canvas');
   const ctx = canvas.getContext('2d');
@@ -56,7 +53,6 @@ function startMatrixCountdown() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#ff69b4";
     ctx.font = fontSize + "px monospace";
-    
     for (let i = 0; i < drops.length; i++) {
       const char = letters[Math.floor(Math.random() * letters.length)];
       ctx.fillText(char, i * fontSize, drops[i] * fontSize);
@@ -65,7 +61,6 @@ function startMatrixCountdown() {
       }
       drops[i]++;
     }
-
     ctx.save();
     ctx.fillStyle = "#ff1493";
     ctx.shadowColor = "#ff69b4";
@@ -79,7 +74,6 @@ function startMatrixCountdown() {
   const renderTimer = setInterval(draw, 33);
 }
 
-// Album 3D
 let swiperInstance = null;
 function goToAlbum() {
   switchScreen('letter-screen', 'album-screen');
@@ -92,7 +86,6 @@ function goToAlbum() {
   }
 }
 
-// Màn Trái Tim & Kích hoạt đếm ngược 8 giây (để test thử)
 function goToHeart() {
   switchScreen('album-screen', 'heart-screen');
   const stage = document.getElementById('heart-stage');
@@ -130,18 +123,16 @@ function goToHeart() {
     }, 150 + i * 65);
   }
 
-  // ============== ĐẾM NGƯỢC HIỂN THỊ THÔNG BÁO MẬT THƯ ==============
-  // Đang để 8 giây (8000ms) để test, nếu chạy tốt bạn đổi lại thành 30000ms
+  // ĐANG TEST HIỂN THỊ THÔNG BÁO SAU 10 GIÂY
+  // Khi bạn gửi cho bạn gái có thể đổi 10000 thành 30000
   setTimeout(() => {
     const toast = document.getElementById('new-email-toast');
     if (toast) {
       toast.classList.add('show');
-      console.log("Đã hiện nút thông báo!");
     }
-  }, 8000); 
+  }, 10000); 
 }
 
-// Modal Ảnh
 function openModal(imageSrc) {
   const modal = document.getElementById('photo-modal');
   const modalImg = document.getElementById('modal-img');
@@ -158,9 +149,7 @@ function closeModal() {
   }
 }
 
-/* ================= CHUỖI SỰ KIỆN MỞ MẬT THƯ (EMAIL) ================= */
 function openEmailIntro() {
-  // Ẩn thông báo toast
   document.getElementById('new-email-toast').classList.remove('show');
   switchScreen('heart-screen', 'email-intro-screen');
 }
