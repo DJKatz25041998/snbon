@@ -1,7 +1,9 @@
 * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+
 body, html { width: 100%; height: 100%; overflow: hidden; background-color: #05050a; font-family: 'Quicksand', sans-serif; color: #fff; }
 
 .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease, visibility 0.8s ease; opacity: 0; visibility: hidden; z-index: 1; }
+
 .screen.active { opacity: 1; visibility: visible; z-index: 10; }
 
 /* MÀN 1 */
@@ -66,7 +68,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: #050
 .cute-envelope:hover { transform: scale(1.05) translateY(-5px); }
 .cute-envelope .flap { position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 75px solid transparent; border-right: 75px solid transparent; border-top: 50px solid #ffb6c1; border-radius: 10px 10px 0 0; }
 .heart-seal { position: absolute; z-index: 2; font-size: 1.5rem; top: 35px; }
-
 .email-red-card { background: #e53935; color: #fff; width: 90%; max-width: 400px; border-radius: 12px; padding: 30px; box-shadow: 0 15px 30px rgba(229, 57, 53, 0.3); font-size: 1.1rem; line-height: 1.6; text-align: left; }
 .email-red-card p { margin-bottom: 12px; }
 .see-attachment { display: inline-block; margin-top: 20px; color: #ffcccb; text-decoration: underline; cursor: pointer; font-style: italic; font-weight: bold; }
@@ -79,9 +80,13 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: #050
 .letter-heading { font-family: 'Dancing Script', cursive; font-size: 3rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
 .letter-body { font-size: 1.1rem; line-height: 1.8; text-align: justify; text-align-last: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); padding-bottom: 50px; }
 
+/* ================= ĐIỀU CHỈNH RIÊNG CHO ĐIỆN THOẠI ================= */
 @media (max-width: 600px) {
-  .heart-img { width: 80px; height: 80px; }
-  .heart-center-text-long { font-size: 0.9rem; }
-  .highlight-name { font-size: 2rem; }
+  /* Tự động thu nhỏ ảnh xuống để vừa khung hẹp dọc của điện thoại */
+  .heart-img { width: 70px; height: 70px; border-radius: 10px; border: 2px solid #ff69b4; }
+  
+  /* Điều chỉnh khung chữ ở giữa gọn lại */
+  .heart-center-text-long { width: 95%; padding: 18px; font-size: 0.85rem; line-height: 1.6; }
+  .highlight-name { font-size: 1.6rem; }
   .letter-body { font-size: 0.95rem; }
 }
